@@ -5,6 +5,7 @@
  */
 package main;
 
+import com.sun.java.swing.plaf.windows.WindowsLookAndFeel;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -14,22 +15,29 @@ import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.SwingUtilities;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
+import ui.Scanner;
 
 /**
  *
  * @author Darshana Rathnayake
  */
 public class Main {
-    public static void main(String[] args){
+
+    public static void main(String[] args) {
         try {
-            File file = new File("D:\\Assignments");
-            HashMap<String, Boolean> scannedList = new HashMap<>();
-            FileIterator.iterate(file, scannedList);
-            for (String k : scannedList.keySet()) {
-                System.out.printf("%s is infected: %b\n", k, scannedList.get(k));
-            }
-        } catch (NoSuchAlgorithmException | IOException ex) {
+            UIManager.setLookAndFeel(new WindowsLookAndFeel());
+        } catch (UnsupportedLookAndFeelException ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         }
+
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                new Scanner().setVisible(true);
+            }
+        });
     }
 }
